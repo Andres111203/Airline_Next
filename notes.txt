@@ -1,0 +1,4 @@
+/app contiene las rutas, componentes y logica para la aplicacion
+/app/lib: funciones usadas en la aplicacion, como funciones utiles y funciones de fectch de datos
+/app/ui: contiene todos los componentes de ui como tablas y formularios
+/public: assets estaticos para la aplicacion, como imagenes
