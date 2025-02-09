@@ -32,6 +32,7 @@ export const TableDemo= () => {
 
 return (
     <Table>
+        <TableCaption><strong>Available Flights</strong></TableCaption>
     <TableHeader>
         <TableRow>
         <TableHead className="w-[100px]">Id Vuelo</TableHead>

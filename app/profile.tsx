@@ -190,8 +190,12 @@ useEffect(() => {
         </FormItem>
       )}
     />
-        <Button type="submit">Submit</Button>
+        <Button className="bg-green-500" type="submit">Submit</Button>
+        <div className="mt-2">
+          <Button className="bg-gray-500"onClick={() => router.push('/dashboard/tables')}>Available Flights</Button>
+        </div>
       </form>
     </Form>
+   
   )
 }

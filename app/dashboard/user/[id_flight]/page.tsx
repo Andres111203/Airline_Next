@@ -62,7 +62,7 @@ export default function ProfileForm() {
 
   function generarPdf(){
     const doc = new jsPDF();
-    doc.text('Bill', 10, 10);
+    doc.text('--------------Bill-----------', 20, 10);
     doc.text('flight id: ' + id_flight, 10, 20); 
     // doc.text('Origin: ' + origen, 10, 30);
     // doc.text('Destination: ' + destino, 10, 40);
@@ -71,7 +71,12 @@ export default function ProfileForm() {
     doc.text('Lastname: ' + form.getValues('lastname'), 10, 70);
     doc.text('Document: ' + form.getValues('documento'), 10, 80);
     doc.text('Email: ' + form.getValues('email'), 10, 90);
+    doc.text('Phone: ' + form.getValues('phone'), 10, 100);
+    doc.text('total------------: ' + form.getValues('price'), 10, 110);
+    doc.text('Thanks for your purchase :)', 10, 130);
     doc.save('bill.pdf');
+
+    alert('Your bill has been generated successfully!');
   }
 
 
@@ -143,6 +148,20 @@ export default function ProfileForm() {
               <FormLabel>Lastname</FormLabel>
               <FormControl>
                 <Input placeholder="Enter your lastname" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      
+      <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem className="fixed-width-input h-16 w-80 border-gray-300 rounded-md">
+              <FormLabel>Phone</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter your phone" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
