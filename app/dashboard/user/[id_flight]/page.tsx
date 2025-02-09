@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
- 
+import jsPDF from "jspdf"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -23,13 +23,17 @@ const formSchema = z.object({
    name: z.string().min(1, { message: "Name is required" }),
    lastname: z.string().min(1, { message: "Lastname is required" }),  
    documento: z.string().min(1, { message: "Documento is required" }),
-  price: z.string()
+  price: z.string(),
+  
 })
 
 export default function ProfileForm() {
+  
   const {id_flight} = useParams()
-  const search = useSearchParams()
-  const {price}: any = search.get('price')
+  const searchParams = useSearchParams()
+  const price = searchParams.get('price')
+  const origen = searchParams.get('origin')
+  const destino = searchParams.get('destination')
 
   console.log(price)
   // 1. Define your form.
@@ -42,7 +46,8 @@ export default function ProfileForm() {
       lastname: "",
       documento: "",
       id_vuelo: Array.isArray(id_flight) ? id_flight[0] : id_flight || "",
-      price: Array.isArray(price) ? price[0] : price || ""
+      price: price || "",
+      
     },
   })
   
@@ -52,12 +57,27 @@ export default function ProfileForm() {
     // ✅ This will be type-safe and validated.
     console.log(values)
     console.log(id_flight)
+    
+  }
+
+  function generarPdf(){
+    const doc = new jsPDF();
+    doc.text('Bill', 10, 10);
+    doc.text('flight id: ' + id_flight, 10, 20); 
+    // doc.text('Origin: ' + origen, 10, 30);
+    // doc.text('Destination: ' + destino, 10, 40);
+    doc.text('Price: ' + price, 10, 50);
+    doc.text('Name: ' + form.getValues('name'), 10, 60);
+    doc.text('Lastname: ' + form.getValues('lastname'), 10, 70);
+    doc.text('Document: ' + form.getValues('documento'), 10, 80);
+    doc.text('Email: ' + form.getValues('email'), 10, 90);
+    doc.save('bill.pdf');
   }
 
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">  
+      <form onSubmit={form.handleSubmit(generarPdf)} className="space-y-8">  
 
       <FormField
           control={form.control}
@@ -142,7 +162,7 @@ export default function ProfileForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Confirm</Button>
       </form>
     </Form>
   )
